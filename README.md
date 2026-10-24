@@ -110,8 +110,8 @@ Visit `http://127.0.0.1:8000/` in your browser.
 |---|---|---|
 | 1 | Aarush Gupta | [@Aarush2112](https://github.com/Aarush2112) |
 | 2 | Sneha Gangwar | [@snehard06](https://github.com/snehard06) |
-| 3 | Member 3 | [@username](https://github.com/username) |
-| 4 | Member 4 | [@username](https://github.com/username) |
+| 3 | Alok Rawat | [@alokr25012-lab](https://github.com/alokr25012-lab) |
+| 4 | Tanvi | [@tanvia25087-prog](https://github.com/tanvia25087-prog) |
 | 5 | Member 5 | [@username](https://github.com/username) |
 
 ## Development Progress
