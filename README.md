@@ -53,8 +53,8 @@ airbnb_clone/
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd <repository-folder>
+git clone <https://github.com/Aarush2112/airbnb-stay-booking>
+cd <airbnb_clone>
 ```
 
 ### 2. Create a Virtual Environment
@@ -117,19 +117,26 @@ Visit `http://127.0.0.1:8000/` in your browser.
 
 ### Completed
 
-- [x] Initialized Django project
-- [x] Created `accounts`, `listings`, and `bookings` apps
-- [x] Set up the Python virtual environment
-- [x] Installed project dependencies
-- [x] Created templates and static directories
-- [x] Generated `requirements.txt`
+- [x] Initialized Django project (`config`)
+- [x] Created Django applications (`accounts`, `listings`, `bookings`)
+- [x] Set up Python virtual environment
+- [x] Installed Django and generated `requirements.txt`
+- [x] Created templates, static, and media directories
+- [x] Configured `settings.py` with installed apps and template/static directories
+- [x] Configured main URL routing in `config/urls.py`
+- [x] Created individual URL configurations for all three apps
+- [x] Created a temporary homepage in `listings/views.py`
+- [x] Successfully passed Django system checks using `python manage.py check`
 
 ### Upcoming
 
-- [ ] Configure Django settings and URL routing
-- [ ] Implement database models
-- [ ] Develop property listing pages
-- [ ] Implement user authentication
-- [ ] Develop booking functionality
-- [ ] Integrate frontend and backend
-- [ ] Test and finalize the application
+- [ ] Initialize SQLite database using `python manage.py migrate`
+- [ ] Verify the homepage using `python manage.py runserver`
+- [ ] Set up individual Git branches for team members
+- [ ] Implement database models for properties and bookings
+- [ ] Develop property listings and property detail pages
+- [ ] Implement user registration, login, and logout
+- [ ] Implement booking functionality and availability validation
+- [ ] Develop responsive frontend templates and styling
+- [ ] Integrate all modules
+- [ ] Perform final testing and debugging
