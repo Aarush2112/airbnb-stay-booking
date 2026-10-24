@@ -13,7 +13,6 @@ The project aims to provide a simple and user-friendly platform for exploring pr
 | HTML, CSS, JavaScript | Frontend development |
 | Django Templates | Dynamic page rendering |
 | SQLite | Database |
-| Pillow | Image handling |
 | Git & GitHub | Version control |
 
 ## Project Structure
