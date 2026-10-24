@@ -109,7 +109,7 @@ Visit `http://127.0.0.1:8000/` in your browser.
 | S. No. | Team Member | GitHub Profile |
 |---|---|---|
 | 1 | Aarush Gupta | [@Aarush2112](https://github.com/Aarush2112) |
-| 2 | Member 2 | [@snehard06](https://github.com/snehard06) |
+| 2 | Sneha Gangwar | [@snehard06](https://github.com/snehard06) |
 | 3 | Member 3 | [@username](https://github.com/username) |
 | 4 | Member 4 | [@username](https://github.com/username) |
 | 5 | Member 5 | [@username](https://github.com/username) |
