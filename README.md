@@ -111,7 +111,7 @@ Visit `http://127.0.0.1:8000/` in your browser.
 | 2 | Sneha Gangwar | [@snehard06](https://github.com/snehard06) |
 | 3 | Alok Rawat | [@alokr25012-lab](https://github.com/alokr25012-lab) |
 | 4 | Tanvi | [@tanvia25087-prog](https://github.com/tanvia25087-prog) |
-| 5 | Member 5 | [@username](https://github.com/username) |
+| 5 | Anshika | [@hoodaanshika0101-eng](https://github.com/hoodaanshika0101-eng) |
 
 ## Development Progress
 
