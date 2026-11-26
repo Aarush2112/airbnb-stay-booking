@@ -1,0 +1,68 @@
+{% extends 'website/base.html' %}
+
+{% block title %}About &amp; Contact — StayVista{% endblock %}
+
+{% block content %}
+  <div class="breadcrumb">
+    <a href="{% url 'website:home' %}">Home</a> &rsaquo; About &amp; Contact
+  </div>
+
+  <div class="about-grid">
+    <div>
+      <h1>About StayVista</h1>
+      <p style="color: var(--text-muted); font-size: 1.02rem;">
+        StayVista is a community-driven vacation rental platform inspired by modern peer-to-peer hospitality.
+        Whether you are planning a quiet mountain retreat or a city weekend, our curated listings highlight
+        transparent pricing, verified amenities, and welcoming local hosts.
+      </p>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <h3>Thoughtfully Curated Stays</h3>
+          <p>Every property includes clear guest capacity, bedroom details, and host ratings before you book.</p>
+        </div>
+        <div class="info-card">
+          <h3>Direct Host Inquiries</h3>
+          <p>Send date-specific booking requests directly from any listing page with automatic nightly estimates.</p>
+        </div>
+        <div class="info-card">
+          <h3>Account Security</h3>
+          <p>User accounts use Django's built-in authentication and PBKDF2 password hashing — never plain-text storage.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="{% url 'website:stays' %}" class="btn btn-primary">Explore stays</a>
+        <a href="{% url 'website:home' %}" class="btn btn-outline">Return home</a>
+      </div>
+    </div>
+
+    <div class="booking-card">
+      <h2 style="margin-top: 0;">Contact Support</h2>
+      <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 18px;">
+        Have a question about a listing or hosting? Send us a message below.
+      </p>
+
+      <form method="post" action="{% url 'website:about' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="id_name">Your Name</label>
+          <input type="text" id="id_name" name="name" value="{{ form_data.name }}" placeholder="Full name" required>
+        </div>
+        <div class="form-group">
+          <label for="id_email">Email Address</label>
+          <input type="email" id="id_email" name="email" value="{{ form_data.email }}" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="id_subject">Subject</label>
+          <input type="text" id="id_subject" name="subject" value="{{ form_data.subject }}" placeholder="How can we help?" required>
+        </div>
+        <div class="form-group">
+          <label for="id_message">Message</label>
+          <textarea id="id_message" name="message" rows="4" placeholder="Write your message here..." required>{{ form_data.message }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send message</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

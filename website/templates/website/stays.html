@@ -1,0 +1,64 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}Explore Stays — StayVista{% endblock %}
+
+{% block content %}
+  <div class="breadcrumb">
+    <a href="{% url 'website:home' %}">Home</a> &rsaquo; Explore Stays
+  </div>
+
+  <div class="section-header">
+    <div>
+      <h2>Explore stays</h2>
+      <p>
+        Showing {{ stays|length }} stay{{ stays|length|pluralize }}
+        {% if query %} matching &ldquo;{{ query }}&rdquo;{% endif %}
+      </p>
+    </div>
+    <form action="{% url 'website:stays' %}" method="get" class="search-bar" style="max-width: 380px; width: 100%;">
+      {% if active_category and active_category != 'all' %}
+        <input type="hidden" name="category" value="{{ active_category }}">
+      {% endif %}
+      <input type="text" name="q" value="{{ query }}" placeholder="Filter by city or keyword..." aria-label="Filter stays">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+
+  <nav class="category-strip" aria-label="Filter by category">
+    {% for slug, label in categories %}
+      <a href="{% url 'website:stays' %}{% if slug != 'all' %}?category={{ slug }}{% if query %}&q={{ query|urlencode }}{% endif %}{% elif query %}?q={{ query|urlencode }}{% endif %}"
+         class="category-pill {% if active_category == slug %}active{% endif %}">
+        {{ label }}
+      </a>
+    {% endfor %}
+  </nav>
+
+  {% if stays %}
+    <div class="stay-grid">
+      {% for stay in stays %}
+        <a href="{% url 'website:stay_detail' stay.slug %}" class="stay-card">
+          <div class="stay-thumb">
+            <img src="{% static 'website/images/' %}{{ stay.image_filename }}" alt="{{ stay.title }}">
+            <span class="stay-badge">{{ stay.get_category_display }}</span>
+          </div>
+          <div class="stay-body">
+            <div class="stay-top">
+              <span class="stay-location">{{ stay.location }}</span>
+              <span class="stay-rating">&#9733; {{ stay.rating }} ({{ stay.review_count }})</span>
+            </div>
+            <p class="stay-title">{{ stay.title }}</p>
+            <div class="stay-meta">{{ stay.max_guests }} guests &middot; {{ stay.bedrooms }} bed &middot; {{ stay.bathrooms }} bath</div>
+            <div class="stay-price"><strong>${{ stay.price_per_night }}</strong> night</div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <h3>No stays matched your filter</h3>
+      <p>Try clearing your search keyword or exploring all categories.</p>
+      <a href="{% url 'website:stays' %}" class="btn btn-primary">Reset filters</a>
+    </div>
+  {% endif %}
+{% endblock %}

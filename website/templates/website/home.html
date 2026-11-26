@@ -1,0 +1,65 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}StayVista — Find Unique Stays &amp; Vacation Homes{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <img src="{% static 'website/images/hero_banner.png' %}" alt="Mountain and forest getaway" class="hero-bg">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Curated Stays Across India</span>
+      <h1>Find your next memorable stay, from pine cabins to sunlit villas.</h1>
+      <p>Browse verified homes hosted by locals, compare amenities, and send a booking inquiry in seconds.</p>
+      <form action="{% url 'website:stays' %}" method="get" class="search-bar" role="search">
+        <input type="text" name="q" placeholder="Search destinations, cabins, or cities (e.g. Goa, Manali)..." aria-label="Search destinations">
+        <button type="submit" class="btn btn-primary">Search stays</button>
+      </form>
+    </div>
+  </section>
+
+  <nav class="category-strip" aria-label="Stay categories">
+    {% for slug, label in categories %}
+      <a href="{% url 'website:stays' %}{% if slug != 'all' %}?category={{ slug }}{% endif %}" class="category-pill {% if slug == 'all' %}active{% endif %}">
+        {{ label }}
+      </a>
+    {% endfor %}
+  </nav>
+
+  <section>
+    <div class="section-header">
+      <div>
+        <h2>Featured stays</h2>
+        <p>Handpicked homes loved by travelers for comfort, views, and hospitality.</p>
+      </div>
+      <a href="{% url 'website:stays' %}" class="btn btn-outline">View all stays</a>
+    </div>
+
+    <div class="stay-grid">
+      {% for stay in featured_stays %}
+        <a href="{% url 'website:stay_detail' stay.slug %}" class="stay-card">
+          <div class="stay-thumb">
+            <img src="{% static 'website/images/' %}{{ stay.image_filename }}" alt="{{ stay.title }}">
+            <span class="stay-badge">{{ stay.host_badge }}</span>
+          </div>
+          <div class="stay-body">
+            <div class="stay-top">
+              <span class="stay-location">{{ stay.location }}</span>
+              <span class="stay-rating">&#9733; {{ stay.rating }}</span>
+            </div>
+            <p class="stay-title">{{ stay.title }}</p>
+            <div class="stay-meta">{{ stay.max_guests }} guests &middot; {{ stay.bedrooms }} bedrooms</div>
+            <div class="stay-price"><strong>${{ stay.price_per_night }}</strong> night</div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="callout-banner">
+    <div>
+      <h3>Have a space to share or questions about booking?</h3>
+      <p>Learn how StayVista connects travelers with local hosts, or reach out to our support team anytime.</p>
+    </div>
+    <a href="{% url 'website:about' %}" class="btn btn-primary">About &amp; Contact</a>
+  </section>
+{% endblock %}

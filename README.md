@@ -1,142 +1,112 @@
-# Airbnb Stay Booking System
+# StayVista — Vacation Rental & Stays Web Application (Airbnb-Inspired)
 
-A web-based accommodation booking platform inspired by Airbnb, built using **Django and Python**.
+- **Student Name:** [Student Name]
+- **Roll Number:** [Roll Number]
+- **Section:** [Section]
 
-The project aims to provide a simple and user-friendly platform for exploring properties, viewing accommodation details, and booking stays.
+## 1. Project Objective
+Build a multi-page Django web application using template inheritance (`base.html`), named URL routing (`{% url %}`), views, SQLite database models with migrations, static assets (CSS, JavaScript, and local PNG images), server-side form validation, and Django's built-in authentication system.
 
-## Tech Stack
+## 2. Website Theme & Reference
+- **Theme:** Vacation rentals & unique stays marketplace (**StayVista**), inspired by Airbnb's clean card grid, category filter strip, pill search bar, coral-rose (`#FF385C`) accent palette, and sticky booking card layout.
+- **Original Assets:** All branding, copy, SVG logo, and property illustrations are original local assets stored under `website/static/website/images/`.
 
-| Technology | Purpose |
-|---|---|
-| Python | Backend development |
-| Django | Web framework |
-| HTML, CSS, JavaScript | Frontend development |
-| Django Templates | Dynamic page rendering |
-| SQLite | Database |
-| Git & GitHub | Version control |
+## 3. Features and Page Descriptions
+| Page | URL | Description |
+| :--- | :--- | :--- |
+| **Home** | `/` | Hero search bar, horizontal category strip, 6 featured stays, and host/support callout. |
+| **Explore Stays** | `/stays/` | Filterable catalog of all 8 stays by category (`?category=...`) and destination keyword (`?q=...`). |
+| **Stay Detail** | `/stays/<slug>/` | Full property details, host badge, amenities grid, live nightly price estimator, and validated Booking Inquiry POST form. |
+| **About & Contact** | `/about/` | Platform overview, security highlights, and validated Contact Support POST form. |
+| **Log In** | `/login/` | Authenticates users by username or email using `django.contrib.auth.authenticate()` and `login()`. |
+| **Sign Up** | `/signup/` | Registers new users with server-side validation, password confirmation matching, and PBKDF2 password hashing via `User.objects.create_user()`. |
+| **Log Out** | `/logout/` | Ends the active user session and redirects to Home. |
 
-## Project Structure
+## 4. Navigation Flow
+- **Home (`/`)** &rarr; Search bar or category pills &rarr; **Explore Stays (`/stays/`)**
+- **Home (`/`)** or **Explore Stays (`/stays/`)** &rarr; Click any property card &rarr; **Stay Detail (`/stays/<slug>/`)**
+- **Header & Footer (all pages)** &rarr; `Home`, `Explore Stays`, `About & Contact`, `Log in`, `Sign up` (or `Log out` when signed in)
+- **Log In (`/login/`)** &harr; **Sign Up (`/signup/`)** &rarr; Direct links between both auth pages and back to **Home (`/`)**
 
+## 5. Technologies Used
+- **Backend:** Python 3.11+, Django (`>=4.2,<6.0`), SQLite3
+- **Frontend:** HTML5, CSS3 (responsive grid & flexbox), Vanilla JavaScript
+- **Authentication:** `django.contrib.auth` (PBKDF2 password hashing, CSRF protection)
+
+## 6. Django Project Structure
 ```text
-airbnb_clone/
-│
-├── config/                 # Django project configuration
-│   ├── settings.py
-│   ├── urls.py
-│   ├── asgi.py
-│   └── wsgi.py
-│
-├── accounts/               # User authentication
-├── listings/               # Property listings
-├── bookings/               # Stay reservations
-│
-├── templates/
-│   ├── accounts/
-│   ├── listings/
-│   └── bookings/
-│
-├── static/
-│   ├── css/
-│   ├── js/
-│   └── images/
-│
-├── media/                  # Uploaded images
-├── venv/                   # Virtual environment (not tracked)
+stayvista_project/
 ├── manage.py
 ├── requirements.txt
-├── .gitignore
-└── README.md
+├── README.md
+├── stayvista_project/
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+└── website/
+    ├── __init__.py
+    ├── admin.py
+    ├── apps.py
+    ├── models.py
+    ├── seed_data.py
+    ├── urls.py
+    ├── views.py
+    ├── migrations/
+    │   ├── __init__.py
+    │   └── 0001_initial.py
+    ├── static/
+    │   └── website/
+    │       ├── css/style.css
+    │       ├── js/main.js
+    │       └── images/
+    │           ├── hero_banner.png
+    │           └── stay_*.png (8 listing images)
+    └── templates/
+        └── website/
+            ├── base.html
+            ├── home.html
+            ├── stays.html
+            ├── stay_detail.html
+            ├── about.html
+            ├── login.html
+            └── signup.html
 ```
 
-## Installation & Setup
+## 7. How to Run the Project
+1. **Extract the archive** and open a terminal inside `stayvista_project/`.
+2. **Create and activate a virtual environment** (recommended):
+   ```bash
+   python -m venv venv
+   # Windows:
+   venv\Scripts\activate
+   # macOS / Linux:
+   source venv/bin/activate
+   ```
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. **Apply database migrations:**
+   ```bash
+   python manage.py migrate
+   ```
+   *(Note: The 8 sample stays automatically seed into SQLite on the first visit to `/` or `/stays/`.)*
+5. **Start the development server:**
+   ```bash
+   python manage.py runserver
+   ```
+6. **Open in browser:** Visit `http://127.0.0.1:8000/`.
 
-### 1. Clone the Repository
+## 8. Screenshots
+- `[Add screenshot of Home page (/)]`
+- `[Add screenshot of Explore Stays page (/stays/)]`
+- `[Add screenshot of Stay Detail page (/stays/pinecone-ridge-a-frame-cabin/)]`
+- `[Add screenshot of About & Contact page (/about/)]`
+- `[Add screenshot of Login (/login/) and Sign Up (/signup/) pages]`
 
-```bash
-git clone <https://github.com/Aarush2112/airbnb-stay-booking>
-cd <airbnb_clone>
-```
-
-### 2. Create a Virtual Environment
-
-```bash
-python3 -m venv venv
-```
-
-Activate the virtual environment:
-
-**macOS / Linux**
-```bash
-source venv/bin/activate
-```
-
-**Windows**
-```bash
-venv\Scripts\activate
-```
-
-### 3. Install Dependencies
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-### 4. Run the Development Server
-
-```bash
-python manage.py runserver
-```
-
-Visit `http://127.0.0.1:8000/` in your browser.
-
-*Note: The project currently contains the initial Django structure. Application configuration and feature development are pending.*
-
-## Planned Features
-
-- User registration and authentication
-- Property listings with images, descriptions, and prices
-- Property search by location
-- Detailed property pages
-- Check-in and check-out date selection
-- Stay booking and availability validation
-- Booking history and management
-- Responsive user interface
-- Django admin panel
-
-## Team Overview
-
-| S. No. | Team Member | GitHub Profile |
-|---|---|---|
-| 1 | Aarush Gupta | [@Aarush2112](https://github.com/Aarush2112) |
-| 2 | Sneha Gangwar | [@snehard06](https://github.com/snehard06) |
-| 3 | Alok Rawat | [@alokr25012-lab](https://github.com/alokr25012-lab) |
-| 4 | Tanvi | [@tanvia25087-prog](https://github.com/tanvia25087-prog) |
-| 5 | Anshika | [@hoodaanshika0101-eng](https://github.com/hoodaanshika0101-eng) |
-
-## Development Progress
-
-### Completed
-
-- [x] Initialized Django project (`config`)
-- [x] Created Django applications (`accounts`, `listings`, `bookings`)
-- [x] Set up Python virtual environment
-- [x] Installed Django and generated `requirements.txt`
-- [x] Created templates, static, and media directories
-- [x] Configured `settings.py` with installed apps and template/static directories
-- [x] Configured main URL routing in `config/urls.py`
-- [x] Created individual URL configurations for all three apps
-- [x] Created a temporary homepage in `listings/views.py`
-- [x] Successfully passed Django system checks using `python manage.py check`
-
-### Upcoming
-
-- [ ] Initialize SQLite database using `python manage.py migrate`
-- [ ] Verify the homepage using `python manage.py runserver`
-- [ ] Set up individual Git branches for team members
-- [ ] Implement database models for properties and bookings
-- [ ] Develop property listings and property detail pages
-- [ ] Implement user registration, login, and logout
-- [ ] Implement booking functionality and availability validation
-- [ ] Develop responsive frontend templates and styling
-- [ ] Integrate all modules
-- [ ] Perform final testing and debugging
+## 9. Known Limitations / Future Improvements
+- **Local Development Secret Key:** `settings.py` reads `DJANGO_SECRET_KEY` from the environment with a local development fallback; set a strong environment secret and `DJANGO_DEBUG=False` before any public deployment.
+- **Booking Inquiries:** Reservation requests are validated and saved to `BookingInquiry` in SQLite without live payment processing.
+- **Future Enhancements:** User trip dashboard, host property submission form, and interactive map view.

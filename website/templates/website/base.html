@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}StayVista — Unique Stays &amp; Homes{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="{% url 'website:home' %}" class="brand-logo" aria-label="StayVista Home">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path d="M16 3C10.5 10.2 6 16.4 6 21.2C6 25.7 9.6 29 14 29C15.9 29 17.5 28.2 18.6 27C19.7 28.2 21.3 29 23.2 29C27.6 29 26 25.7 26 21.2C26 16.4 21.5 10.2 16 3Z" stroke="#FF385C" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="16" cy="20" r="3" fill="#FF385C"/>
+        </svg>
+        <span>StayVista</span>
+      </a>
+
+      <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="{% url 'website:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+        <a href="{% url 'website:stays' %}" class="nav-link {% if request.resolver_match.url_name == 'stays' or request.resolver_match.url_name == 'stay_detail' %}active{% endif %}">Explore Stays</a>
+        <a href="{% url 'website:about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About &amp; Contact</a>
+      </nav>
+
+      <div class="auth-actions">
+        {% if user.is_authenticated %}
+          <span class="user-pill">Hi, {{ user.first_name|default:user.username }}</span>
+          <a href="{% url 'website:logout' %}" class="btn btn-outline">Log out</a>
+        {% else %}
+          <a href="{% url 'website:login' %}" class="btn btn-outline">Log in</a>
+          <a href="{% url 'website:signup' %}" class="btn btn-primary">Sign up</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      {% if messages %}
+        <div class="messages-wrap">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags|default:'info' }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">StayVista</div>
+          <p class="footer-desc">
+            Discover cabins, coastal villas, city lofts, and tranquil retreats hosted by local communities around the world.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="{% url 'website:home' %}">Home</a></li>
+            <li><a href="{% url 'website:stays' %}">All Stays</a></li>
+            <li><a href="{% url 'website:stays' %}?category=cabins">Cabins</a></li>
+            <li><a href="{% url 'website:stays' %}?category=beachfront">Beachfront</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support &amp; Account</h4>
+          <ul>
+            <li><a href="{% url 'website:about' %}">About &amp; Contact</a></li>
+            {% if user.is_authenticated %}
+              <li><a href="{% url 'website:logout' %}">Log out</a></li>
+            {% else %}
+              <li><a href="{% url 'website:login' %}">Log in</a></li>
+              <li><a href="{% url 'website:signup' %}">Sign up</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 StayVista. Academic Django Web Application Project.</span>
+        <span>Inspired by modern vacation rental platforms.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'website/js/main.js' %}"></script>
+</body>
+</html>
