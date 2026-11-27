@@ -1,8 +1,7 @@
 # StayVista — Vacation Rental & Stays Web Application (Airbnb-Inspired)
 
-- **Student Name:** [Student Name]
-- **Roll Number:** [Roll Number]
-- **Section:** [Section]
+- **Student Name:**  Aarush, Sneha Gangwar, Anshika, Tanvi, Alok
+- **Course:** B.Tech CS (DS)
 
 ## 1. Project Objective
 Build a multi-page Django web application using template inheritance (`base.html`), named URL routing (`{% url %}`), views, SQLite database models with migrations, static assets (CSS, JavaScript, and local PNG images), server-side form validation, and Django's built-in authentication system.
@@ -99,14 +98,9 @@ stayvista_project/
    ```
 6. **Open in browser:** Visit `http://127.0.0.1:8000/`.
 
-## 8. Screenshots
-- `[Add screenshot of Home page (/)]`
-- `[Add screenshot of Explore Stays page (/stays/)]`
-- `[Add screenshot of Stay Detail page (/stays/pinecone-ridge-a-frame-cabin/)]`
-- `[Add screenshot of About & Contact page (/about/)]`
-- `[Add screenshot of Login (/login/) and Sign Up (/signup/) pages]`
 
-## 9. Known Limitations / Future Improvements
+
+## 8. Known Limitations / Future Improvements
 - **Local Development Secret Key:** `settings.py` reads `DJANGO_SECRET_KEY` from the environment with a local development fallback; set a strong environment secret and `DJANGO_DEBUG=False` before any public deployment.
 - **Booking Inquiries:** Reservation requests are validated and saved to `BookingInquiry` in SQLite without live payment processing.
 - **Future Enhancements:** User trip dashboard, host property submission form, and interactive map view.
