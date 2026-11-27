@@ -4,119 +4,125 @@
 {% block title %}{{ stay.title }} — StayVista{% endblock %}
 
 {% block content %}
-  <div class="breadcrumb">
-    <a href="{% url 'website:home' %}">Home</a> &rsaquo;
-    <a href="{% url 'website:stays' %}">Explore Stays</a> &rsaquo;
-    {{ stay.title }}
-  </div>
+<div class="breadcrumb">
+  <a href="{% url 'website:home' %}">Home</a> &rsaquo;
+  <a href="{% url 'website:stays' %}">Explore Stays</a> &rsaquo;
+  {{ stay.title }}
+</div>
 
-  <div class="detail-header">
-    <h1>{{ stay.title }}</h1>
-    <div class="detail-sub">
-      <span>&#9733; <strong>{{ stay.rating }}</strong> ({{ stay.review_count }} reviews)</span>
-      <span>&middot;</span>
-      <span>{{ stay.host_badge }}: <strong>{{ stay.host_name }}</strong></span>
-      <span>&middot;</span>
-      <span>{{ stay.location }}</span>
+<div class="detail-header">
+  <h1>{{ stay.title }}</h1>
+  <div class="detail-sub">
+    <span>&#9733; <strong>{{ stay.rating }}</strong> ({{ stay.review_count }} reviews)</span>
+    <span>&middot;</span>
+    <span>{{ stay.host_badge }}: <strong>{{ stay.host_name }}</strong></span>
+    <span>&middot;</span>
+    <span>{{ stay.location }}</span>
+  </div>
+</div>
+
+<img src="{% static 'website/images/' %}{{ stay.image_filename }}" alt="{{ stay.title }}" class="detail-hero-img">
+
+<div class="detail-layout">
+  <div>
+    <div class="detail-section">
+      <h2>{{ stay.get_category_display }} hosted by {{ stay.host_name }}</h2>
+      <p style="color: var(--text-muted); margin: 0;">
+        Up to {{ stay.max_guests }} guests &middot; {{ stay.bedrooms }} bedroom{{ stay.bedrooms|pluralize }} &middot; {{
+        stay.bathrooms }} bathroom{{ stay.bathrooms|pluralize }}
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>About this space</h3>
+      <p>{{ stay.summary }}</p>
+      <p>{{ stay.description }}</p>
+    </div>
+
+    <div class="detail-section" style="border-bottom: none;">
+      <h3>What this place offers</h3>
+      <ul class="amenity-list">
+        {% for amenity in stay.amenity_list %}
+        <li>&#10003; {{ amenity }}</li>
+        {% endfor %}
+      </ul>
     </div>
   </div>
 
-  <img src="{% static 'website/images/' %}{{ stay.image_filename }}" alt="{{ stay.title }}" class="detail-hero-img">
+  <aside class="booking-card">
+    <div class="booking-price">
+      <strong>${{ stay.price_per_night }}</strong> <span
+        style="color: var(--text-muted); font-size: 0.95rem;">night</span>
+    </div>
 
-  <div class="detail-layout">
+    <form method="post" action="{% url 'website:stay_detail' stay.slug %}">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_check_in">Check-in</label>
+          <input type="date" id="id_check_in" name="check_in" value="{{ form_data.check_in }}" required>
+        </div>
+        <div class="form-group">
+          <label for="id_check_out">Check-out</label>
+          <input type="date" id="id_check_out" name="check_out" value="{{ form_data.check_out }}" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="id_guests">Guests (max {{ stay.max_guests }})</label>
+        <input type="number" id="id_guests" name="guests" min="1" max="{{ stay.max_guests }}"
+          value="{{ form_data.guests }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="id_guest_name">Your full name</label>
+        <input type="text" id="id_guest_name" name="guest_name" value="{{ form_data.guest_name }}"
+          placeholder="e.g. Ananya Sharma" required>
+      </div>
+
+      <div class="form-group">
+        <label for="id_guest_email">Email address</label>
+        <input type="email" id="id_guest_email" name="guest_email" value="{{ form_data.guest_email }}"
+          placeholder="name@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="id_notes">Message to host (optional)</label>
+        <textarea id="id_notes" name="notes" rows="2"
+          placeholder="Arrival time or special requests...">{{ form_data.notes }}</textarea>
+      </div>
+
+      <div id="price-estimate" class="price-estimate" data-rate="{{ stay.price_per_night }}"></div>
+
+      <button type="submit" class="btn btn-primary btn-block">Request to book</button>
+    </form>
+  </aside>
+</div>
+
+<section>
+  <div class="section-header">
     <div>
-      <div class="detail-section">
-        <h2>{{ stay.get_category_display }} hosted by {{ stay.host_name }}</h2>
-        <p style="color: var(--text-muted); margin: 0;">
-          Up to {{ stay.max_guests }} guests &middot; {{ stay.bedrooms }} bedroom{{ stay.bedrooms|pluralize }} &middot; {{ stay.bathrooms }} bathroom{{ stay.bathrooms|pluralize }}
-        </p>
-      </div>
-
-      <div class="detail-section">
-        <h3>About this space</h3>
-        <p>{{ stay.summary }}</p>
-        <p>{{ stay.description }}</p>
-      </div>
-
-      <div class="detail-section" style="border-bottom: none;">
-        <h3>What this place offers</h3>
-        <ul class="amenity-list">
-          {% for amenity in stay.amenity_list %}
-            <li>&#10003; {{ amenity }}</li>
-          {% endfor %}
-        </ul>
-      </div>
+      <h2>More stays to explore</h2>
+      <p>Continue browsing other destinations on StayVista.</p>
     </div>
-
-    <aside class="booking-card">
-      <div class="booking-price">
-        <strong>${{ stay.price_per_night }}</strong> <span style="color: var(--text-muted); font-size: 0.95rem;">night</span>
-      </div>
-
-      <form method="post" action="{% url 'website:stay_detail' stay.slug %}">
-        {% csrf_token %}
-        <div class="form-row">
-          <div class="form-group">
-            <label for="id_check_in">Check-in</label>
-            <input type="date" id="id_check_in" name="check_in" value="{{ form_data.check_in }}" required>
-          </div>
-          <div class="form-group">
-            <label for="id_check_out">Check-out</label>
-            <input type="date" id="id_check_out" name="check_out" value="{{ form_data.check_out }}" required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="id_guests">Guests (max {{ stay.max_guests }})</label>
-          <input type="number" id="id_guests" name="guests" min="1" max="{{ stay.max_guests }}" value="{{ form_data.guests }}" required>
-        </div>
-
-        <div class="form-group">
-          <label for="id_guest_name">Your full name</label>
-          <input type="text" id="id_guest_name" name="guest_name" value="{{ form_data.guest_name }}" placeholder="e.g. Ananya Sharma" required>
-        </div>
-
-        <div class="form-group">
-          <label for="id_guest_email">Email address</label>
-          <input type="email" id="id_guest_email" name="guest_email" value="{{ form_data.guest_email }}" placeholder="you@example.com" required>
-        </div>
-
-        <div class="form-group">
-          <label for="id_notes">Message to host (optional)</label>
-          <textarea id="id_notes" name="notes" rows="2" placeholder="Arrival time or special requests...">{{ form_data.notes }}</textarea>
-        </div>
-
-        <div id="price-estimate" class="price-estimate" data-rate="{{ stay.price_per_night }}"></div>
-
-        <button type="submit" class="btn btn-primary btn-block">Request to book</button>
-      </form>
-    </aside>
+    <a href="{% url 'website:stays' %}" class="btn btn-outline">Back to all stays</a>
   </div>
-
-  <section>
-    <div class="section-header">
-      <div>
-        <h2>More stays to explore</h2>
-        <p>Continue browsing other destinations on StayVista.</p>
+  <div class="stay-grid">
+    {% for item in related_stays %}
+    <a href="{% url 'website:stay_detail' item.slug %}" class="stay-card">
+      <div class="stay-thumb">
+        <img src="{% static 'website/images/' %}{{ item.image_filename }}" alt="{{ item.title }}">
       </div>
-      <a href="{% url 'website:stays' %}" class="btn btn-outline">Back to all stays</a>
-    </div>
-    <div class="stay-grid">
-      {% for item in related_stays %}
-        <a href="{% url 'website:stay_detail' item.slug %}" class="stay-card">
-          <div class="stay-thumb">
-            <img src="{% static 'website/images/' %}{{ item.image_filename }}" alt="{{ item.title }}">
-          </div>
-          <div class="stay-body">
-            <div class="stay-top">
-              <span class="stay-location">{{ item.location }}</span>
-              <span class="stay-rating">&#9733; {{ item.rating }}</span>
-            </div>
-            <p class="stay-title">{{ item.title }}</p>
-            <div class="stay-price"><strong>${{ item.price_per_night }}</strong> night</div>
-          </div>
-        </a>
-      {% endfor %}
-    </div>
-  </section>
+      <div class="stay-body">
+        <div class="stay-top">
+          <span class="stay-location">{{ item.location }}</span>
+          <span class="stay-rating">&#9733; {{ item.rating }}</span>
+        </div>
+        <p class="stay-title">{{ item.title }}</p>
+        <div class="stay-price"><strong>${{ item.price_per_night }}</strong> night</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}
